@@ -1,6 +1,7 @@
 const express = require('express');
 const exphbs  = require('express-handlebars');
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 
 const app = express();
 
@@ -21,6 +22,10 @@ app.engine('handlebars', exphbs({
 }));
 app.set('view engine', 'handlebars');
 
+// Body parser middleware
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
+
 // Index route
 app.get('/', (req, res) => {
     const title = 'Welcome';
@@ -32,6 +37,17 @@ app.get('/', (req, res) => {
 // About route
 app.get('/about', (req, res) => {
     res.render('about')
+});
+
+// Add Idea route
+app.get('/ideas/add', (req,res) => {
+    res.render('ideas/add')
+});
+
+// Process form
+app.post('/ideas', (req, res) => {
+    
+    res.send('ok');
 });
 
 const port = 5000;
